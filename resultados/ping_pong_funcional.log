@@ -1,0 +1,7 @@
+ihan@VICTUS:~/Labo3_paralela$ mpirun -np 2 ./build/ping_pong 5 16 --detalle
+[rank 0] iteracion 1: ping enviado y pong recibido, valor=42
+[rank 0] iteracion 2: ping enviado y pong recibido, valor=42
+[rank 0] iteracion 3: ping enviado y pong recibido, valor=42
+[rank 0] iteracion 4: ping enviado y pong recibido, valor=42
+[rank 0] iteracion 5: ping enviado y pong recibido, valor=42
+PING_PONG iteraciones=5 enteros=16 bytes=64 tiempo_total_s=0.000051952 tiempo_promedio_ms=0.010390400 valor_final=42

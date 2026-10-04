@@ -1,0 +1,27 @@
+ihan@VICTUS:~/Labo3_paralela$ mpirun -np 5 ./build/token_ring blocking 2 --detalle
+[rank 0] ciclo 1: inicia token=0 y envia a rank 1
+[rank 1] recibe de rank 0 y envia a rank 2, token=1
+[rank 2] recibe de rank 1 y envia a rank 3, token=2
+[rank 3] recibe de rank 2 y envia a rank 4, token=3
+[rank 4] recibe de rank 3 y envia a rank 0, token=4
+[rank 0] ciclo 1: recibe de rank 4, token=5
+[rank 0] ciclo 2: inicia token=5 y envia a rank 1
+[rank 1] recibe de rank 0 y envia a rank 2, token=6
+[rank 2] recibe de rank 1 y envia a rank 3, token=7
+[rank 3] recibe de rank 2 y envia a rank 4, token=8
+[rank 4] recibe de rank 3 y envia a rank 0, token=9
+[rank 0] ciclo 2: recibe de rank 4, token=10
+TOKEN_RING metodo=blocking procesos=5 ciclos=2 token_final=10 esperado=10 tiempo_s=0.000235027 estado=correcto
+
+ihan@VICTUS:~/Labo3_paralela$ mpirun -np 5 ./build/token_ring sendrecv 2 --detalle
+[rank 1] ciclo 1, salto 1: recibe de rank 0, token=1
+[rank 1] ciclo 2, salto 1: recibe de rank 0, token=6
+[rank 2] ciclo 1, salto 2: recibe de rank 1, token=2
+[rank 2] ciclo 2, salto 2: recibe de rank 1, token=7
+[rank 3] ciclo 1, salto 3: recibe de rank 2, token=3
+[rank 3] ciclo 2, salto 3: recibe de rank 2, token=8
+[rank 4] ciclo 1, salto 4: recibe de rank 3, token=4
+[rank 4] ciclo 2, salto 4: recibe de rank 3, token=9
+[rank 0] ciclo 1, salto 5: recibe de rank 4, token=5
+[rank 0] ciclo 2, salto 5: recibe de rank 4, token=10
+TOKEN_RING metodo=sendrecv procesos=5 ciclos=2 token_final=10 esperado=10 tiempo_s=0.000163238 estado=correcto

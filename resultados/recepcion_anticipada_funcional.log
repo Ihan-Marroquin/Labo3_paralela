@@ -1,0 +1,2 @@
+ihan@VICTUS:~/Labo3_paralela$ mpirun -np 2 ./build/recepcion_anticipada 4096 50000
+RECEPCION_ANTICIPADA enteros=4096 bytes=16384 tiempo_s=0.000120581 pruebas_mpi_test=1 operaciones=50000 valor=7 checksum=28672 trabajo=2.448830

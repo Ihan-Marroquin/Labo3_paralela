@@ -1,0 +1,6 @@
+ihan@VICTUS:~/Labo3_paralela$ mpirun -np 2 ./build/pipeline_chunks 4096 1024 --detalle
+[rank 1] chunk 1/4 procesado, suma_parcial=49776
+[rank 1] chunk 2/4 procesado, suma_parcial=50928
+[rank 1] chunk 3/4 procesado, suma_parcial=51504
+[rank 1] chunk 4/4 procesado, suma_parcial=50352
+PIPELINE_CHUNKS total_enteros=4096 chunk_enteros=1024 chunks=4 bytes=16384 tiempo_total_s=0.000046058 checksum=202560 stop_recibido=si
