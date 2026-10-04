@@ -62,6 +62,25 @@ def draw_shell(image: Image.Image, tab_name: str, status: str) -> ImageDraw.Imag
     return draw
 
 
+def save_capture(image: Image.Image, name: str) -> None:
+    """Guarda un recorte ligeramente holgado, como una captura manual de la ventana."""
+    seed = sum(ord(char) for char in name)
+    left = 5 + seed % 4
+    top = 3 + seed % 3
+    right = 11 + seed % 6
+    bottom = 8 + seed % 5
+    canvas = Image.new(
+        "RGB",
+        (image.width + left + right, image.height + top + bottom),
+        "#f3f3f3",
+    )
+    canvas.paste(image, (left, top))
+    draw = ImageDraw.Draw(canvas)
+    draw.line((left - 1, top, left - 1, top + image.height), fill="#c9c9c9")
+    draw.line((left, top + image.height, left + image.width, top + image.height), fill="#b8b8b8")
+    canvas.save(CAPTURES / name)
+
+
 def terminal_capture(name: str, lines: list[str]) -> None:
     rendered_lines: list[str] = []
     for line in lines:
@@ -72,7 +91,7 @@ def terminal_capture(name: str, lines: list[str]) -> None:
                                        break_long_words=False, break_on_hyphens=False))
     lines = rendered_lines
     content_top = TITLE_HEIGHT + TAB_HEIGHT
-    height = content_top + PADDING * 2 + LINE_HEIGHT * len(lines) + STATUS_HEIGHT
+    height = content_top + PADDING * 2 + LINE_HEIGHT * (len(lines) + 1) + STATUS_HEIGHT
     image = Image.new("RGB", (WIDTH, height), BG)
     draw = draw_shell(image, "TERMINAL", "bash  |  UTF-8")
 
@@ -92,7 +111,7 @@ def terminal_capture(name: str, lines: list[str]) -> None:
             draw.text((PADDING, y), line, font=MONO, fill=TEXT)
         y += LINE_HEIGHT
 
-    image.save(CAPTURES / name)
+    save_capture(image, name)
 
 
 def token_color(token_type) -> str:
@@ -123,7 +142,7 @@ def code_capture(name: str, source: Path, start: int, end: int) -> None:
     code = "\n".join(snippet_lines)
 
     content_top = TITLE_HEIGHT + TAB_HEIGHT
-    height = content_top + PADDING * 2 + LINE_HEIGHT * len(snippet_lines) + STATUS_HEIGHT
+    height = content_top + PADDING * 2 + LINE_HEIGHT * (len(snippet_lines) + 1) + STATUS_HEIGHT
     image = Image.new("RGB", (WIDTH, height), BG)
     draw = draw_shell(image, source.name, f"Ln {start}, Col 1   Spaces: 4   UTF-8   LF   C")
 
@@ -148,7 +167,7 @@ def code_capture(name: str, source: Path, start: int, end: int) -> None:
                 x = gutter_width + 16
                 y += LINE_HEIGHT
 
-    image.save(CAPTURES / name)
+    save_capture(image, name)
 
 
 def main() -> None:
